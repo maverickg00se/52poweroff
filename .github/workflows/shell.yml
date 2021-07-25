@@ -5,12 +5,13 @@ name: enter github action shell
 # Controls when the workflow will run
 on:
   # Allows you to run this workflow manually from the Actions tab
+  repository_dispatch:
   workflow_dispatch:
       inputs:
         ssh:
           description: 'SSH connection to Actions'
-          required: true
-          default: 'true'
+          required: false
+          default: 'false'
 env:
   TZ: Asia/Shanghai
 
@@ -25,7 +26,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@main
-
+      
+      - name: git clone
+        run: git clone https://github.com/sirpdboy/luci-app-poweroffdevice package/luci-app-poweroffdevice
+        
+        
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
